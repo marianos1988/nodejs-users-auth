@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+      "target": "es6",               // La versión de JavaScript de destino
+      "module": "commonjs",           // El sistema de módulos
+      "strict": true,                 // Habilitar el modo estricto
+      "esModuleInterop": true         // Compatibilidad con importaciones de ES6
+    },
+    "include": ["src"],               // Carpeta donde tienes tus archivos TypeScript
+    "exclude": ["node_modules"]       // Excluir dependencias externas
+  }
+  
