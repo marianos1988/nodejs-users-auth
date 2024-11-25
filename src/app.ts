@@ -22,7 +22,7 @@ app.post("/Logout", (req,res)=>{
 
 });
 
-app.get("/protected", (req,res)=>{
+app.get("/protectedgit", (req,res)=>{
 
 });
 
