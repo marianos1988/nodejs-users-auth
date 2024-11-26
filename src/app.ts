@@ -1,7 +1,5 @@
 import express from "express";
 // import { UserRepository } from "./repository";
-// import { PORT } from "./config ";
-import pool from "./bdConfig";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";

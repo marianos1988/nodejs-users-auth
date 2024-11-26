@@ -3,8 +3,9 @@ import pool from "../bdConfig"
 const register = async (req: any,res: any) => {
 
   const data = await req.body;
-  const {username, password} = data;
-  console.log("asd");
+  const { username, password } = data;
+ 
+
   // Validaciones del username
   if(typeof username !== "string") throw new Error("username must be a string");
   else if(username.length < 3) throw new Error("username must be at least 3 characters long");
@@ -13,39 +14,35 @@ const register = async (req: any,res: any) => {
   else if(typeof password !== "string") throw new Error("username must be a string");
   else if(password.length < 6) throw new Error("password must be at least 6 characters long");
 
-  // else {
-  //   //Asegurar que username que no existe
-  //   const query = `SELECT * FROM users WHERE username = "${username}"`;
-  //   pool.query(query, async (err,resu)=>{
+  else {
 
-  //     if(err) throw err;
+    try {
+      //Asegurar que username que no existe
+      const query = `SELECT * FROM users WHERE username = "${username}"`;
+      pool.query(query, async (err,resu)=>{
 
-  //     const repeatUser = await resu;
+        if(err) throw err;
 
-  //     if(repeatUser) throw new Error("username already exists");
-  //     else {
-
-  //     }
-
-  //   })
-  // }
-
-      // const user = User.findOne({ username })
-      // if(user) throw new Error("username already exists");
+        const repeatUser = await resu[0];
 
 
+        if(repeatUser.username === username) {
 
-  // try {
+          console.log("username already exists");
+        } else {
 
-  //   // const id = UserRepository.create({username, password});
-  //   // res.json(id);
+          res.json("Todo ok")
+        }
 
-  // } catch (error) {
-  //   //Normalmente no es normal mandar directo el error del repositorio
-  //   res.status(400).send(error)
-  // }
 
-  res.send("jojo")
+
+
+      })
+    } catch (error) {
+      throw new Error("asd")
+    }
+
+  }
 }
 
 
