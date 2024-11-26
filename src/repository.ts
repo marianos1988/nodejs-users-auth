@@ -32,7 +32,7 @@ export class UserRepository {
       _id: id,
       username: username,
       password: password
-    }).save(); //Crea el usuario y luego lo guarda
+    }).save(); //Crea el usuario y luego lo guarda 
   }
-  static login ({ username, password }) {}
+  // static login ({ username, password }) {}
 }
