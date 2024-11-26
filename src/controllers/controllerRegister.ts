@@ -1,11 +1,12 @@
-import pool from "../bdConfig"
+import pool from "../bdConfig";
+// import bcrypt from "bcrypt"; //Para hashear las contraseñas
+
 
 const register = async (req: any,res: any) => {
 
   const data = await req.body;
   const { username, password } = data;
- 
-
+ console.log(username)
   // Validaciones del username
   if(typeof username !== "string") throw new Error("username must be a string");
   else if(username.length < 3) throw new Error("username must be at least 3 characters long");
@@ -31,7 +32,12 @@ const register = async (req: any,res: any) => {
           console.log("username already exists");
         } else {
 
-          res.json("Todo ok")
+          const query2 = `INSERT INTO users (username, password) VALUES ("${username}", "${password}")`;
+          pool.query(query2, async (erro,ress)=>{
+            if(erro) throw erro;
+            res.json("User Created");
+          });
+          
         }
 
 
