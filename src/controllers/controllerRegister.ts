@@ -8,12 +8,12 @@ const register = async (req: any,res: any) => {
   const { username, password } = data;
  console.log(username)
   // Validaciones del username
-  if(typeof username !== "string") throw new Error("username must be a string");
-  else if(username.length < 3) throw new Error("username must be at least 3 characters long");
+  if(typeof username !== "string") res.json("username must be a string");
+  else if(username.length < 3) res.json("username must be at least 3 characters long");
   
   // Validaciones del password
-  else if(typeof password !== "string") throw new Error("username must be a string");
-  else if(password.length < 6) throw new Error("password must be at least 6 characters long");
+  else if(typeof password !== "string") res.json("username must be a string");
+  else if(password.length < 6) res.json("password must be at least 6 characters long");
 
   else {
 
@@ -29,7 +29,7 @@ const register = async (req: any,res: any) => {
 
         if(repeatUser.username === username) {
 
-          console.log("username already exists");
+          res.json("username already exists");
         } else {
 
           const query2 = `INSERT INTO users (username, password) VALUES ("${username}", "${password}")`;
