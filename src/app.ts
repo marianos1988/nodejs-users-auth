@@ -8,6 +8,10 @@ import morgan from "morgan";
 import routerRegister from "./routers/routerRegister"
 
 const app = express();
+
+app.use(cors());
+app.use(helmet());
+app.use(morgan("dev")); 
 app.use(express.json());
 
 const PORT =  process.env.PORT || 3000;
@@ -21,23 +25,9 @@ app.post("/Login", (req,res)=>{
 
 });
 
-app.post("/Register", async (req,res)=>{
-  const data = await req.body;
-  const {username, password} = data;
-
-  try {
-
-    // const id = UserRepository.create({username, password});
-    // res.json(id);
-
-  } catch (error) {
-    //Normalmente no es normal mandar directo el error del repositorio
-    res.status(400).send(error)
-  }
+app.use("/Register", routerRegister)
 
 
-
-});
  
 app.post("/Logout", (req,res)=>{
 
