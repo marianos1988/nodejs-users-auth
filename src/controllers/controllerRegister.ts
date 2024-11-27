@@ -1,5 +1,5 @@
 import pool from "../bdConfig";
-// import bcrypt from "bcrypt"; //Para hashear las contraseñas
+import bcrypt from "bcrypt"; //Para hashear las contraseñas
 
 
 const register = async (req: any,res: any) => {
@@ -27,11 +27,13 @@ const register = async (req: any,res: any) => {
 
         const data = await resu;
         
-
+        //Hashear contraseña
+        const hashedPassword = bcrypt.hashSync(password, 10); //El numero 10 es el nivel de codificacion de la pass, mayor es el numero mejor es la codificaiocn pero es mas lento el proceso
+        //El hashSync bloquea el thread principal
 
         if(data.length === 0) {
 
-          const query2 = `INSERT INTO users (username, password) VALUES ("${username}", "${password}")`;
+          const query2 = `INSERT INTO users (username, password) VALUES ("${username}", "${hashedPassword}")`;
           pool.query(query2, async (erro,resul)=>{
             if(erro) throw erro;
             await res.json("User Created");
