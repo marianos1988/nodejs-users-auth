@@ -6,7 +6,8 @@ const register = async (req: any,res: any) => {
 
   const data = await req.body;
   const { username, password } = data;
- console.log(username)
+
+
   // Validaciones del username
   if(typeof username !== "string") res.json("username must be a string");
   else if(username.length < 3) res.json("username must be at least 3 characters long");
@@ -24,33 +25,37 @@ const register = async (req: any,res: any) => {
 
         if(err) throw err;
 
-        const repeatUser = await resu[0];
+        const data = await resu;
+        
 
 
-        if(repeatUser.username === username) {
-
-          res.json("username already exists");
-        } else {
+        if(data.length === 0) {
 
           const query2 = `INSERT INTO users (username, password) VALUES ("${username}", "${password}")`;
-          pool.query(query2, async (erro,ress)=>{
+          pool.query(query2, async (erro,resul)=>{
             if(erro) throw erro;
-            res.json("User Created");
+            await res.json("User Created");
           });
-          
+
+
+        } else {
+
+          res.json("username already exists");
         }
+
+
+
 
 
 
 
       })
     } catch (error) {
-      throw new Error("asd")
+      console.log(error)
     }
 
   }
 }
-
 
 export default {
   register
