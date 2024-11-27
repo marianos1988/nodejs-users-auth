@@ -12,7 +12,7 @@ const register = async (req: any,res: any) => {
   // Validaciones del username
   const valiUser = utils.validateUsername(username);
   if(valiUser.validate) {
-    res.send(valiUser.message)
+    res.json(valiUser.message)
   }
 
   // Validaciones del password
@@ -20,7 +20,6 @@ const register = async (req: any,res: any) => {
   if(valiPassword.validate) {
     res.json(valiUser.message)
   }
-
 
 
 
