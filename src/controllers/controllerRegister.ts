@@ -1,5 +1,6 @@
 import pool from "../bdConfig";
 import bcrypt from "bcrypt"; //Para hashear las contraseñas
+import utils from "./utils";
 
 
 const register = async (req: any,res: any) => {
@@ -9,14 +10,19 @@ const register = async (req: any,res: any) => {
 
 
   // Validaciones del username
-  if(typeof username !== "string") res.json("username must be a string");
-  else if(username.length < 3) res.json("username must be at least 3 characters long");
-  
-  // Validaciones del password
-  else if(typeof password !== "string") res.json("username must be a string");
-  else if(password.length < 6) res.json("password must be at least 6 characters long");
+  const valiUser = utils.validateUsername(username);
+  if(valiUser.validate) {
+    res.send(valiUser.message)
+  }
 
-  else {
+  // Validaciones del password
+  const valiPassword = utils.validatePassword(password);
+  if(valiPassword.validate) {
+    res.json(valiUser.message)
+  }
+
+
+
 
     try {
       //Asegurar que username que no existe
@@ -56,7 +62,7 @@ const register = async (req: any,res: any) => {
       console.log(error)
     }
 
-  }
+  
 }
 
 export default {
