@@ -1,5 +1,5 @@
 import pool from "../bdConfig";
-import bcrypt, { hashSync } from "bcrypt";
+import bcrypt from "bcrypt";
 import utils from "./utils";
 
 
@@ -13,13 +13,11 @@ const login = async (req:any, res:any) => {
       res.json(valiUser.message)
     } else {
       // Validaciones del password
-      const valiPassword = utils.validatePassword(password);
+      let valiPassword = utils.validatePassword(password);
       if(!valiPassword.validate) {
         res.json(valiPassword.message)
     } else {
       
-        const hashedPassword = hashSync(password,10);
-
         try {
           
           const query = `SELECT * FROM users WHERE username = "${username}"`;
@@ -28,8 +26,18 @@ const login = async (req:any, res:any) => {
 
             const dataDB = await resu;
 
-            console.log(dataDB);
-            res.json("User Logged!")
+            if(dataDB.length === 0) {
+
+              res.json("Username not exist!")
+            } else {
+              console.log(dataDB[0].password);
+              console.log(password);
+
+              const isValidPassword = await bcrypt.compare(password, dataDB[0].password)
+              console.log(isValidPassword)
+              res.json("User Logged!")
+            }
+
           })
           
         } catch (error) {
