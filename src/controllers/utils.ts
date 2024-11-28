@@ -7,21 +7,21 @@
     // Validaciones del username
     if(typeof username !== "string") {
       return {
-        validate: true,
+        validate: false,
         message: "username must be a string"
       }
 
     }
     else if(username.length < 3) {
       return {
-        validate: true,
+        validate: false,
         message: "username must be at least 3 characters long"
       }
 
     } else {
       return {
-        validate: false,
-        message: ""
+        validate: true,
+        message: "Username OK"
       }
     }
   }
@@ -32,20 +32,20 @@
     // Validaciones del password
     if(typeof password !== "string") {
       return {
-        validate: true,
-        message: "username must be a string"
+        validate: false,
+        message: "password must be a string"
       }
 
     }
     else if(password.length < 6) {
       return {
-        validate: true,
+        validate: false,
         message: "password must be at least 6 characters long"
       }
     } else {
       return {
-        validate: false,
-        message: ""
+        validate: true,
+        message: "Password OK"
       }
     }
   }
