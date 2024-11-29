@@ -1,6 +1,7 @@
 import pool from "../bdConfig";
 import bcrypt from "bcrypt";
 import utils from "./utils";
+import jwt from "jsonwebtoken";
 
 
 const login = async (req:any, res:any) => {
@@ -35,6 +36,11 @@ const login = async (req:any, res:any) => {
               const isValidPassword = bcrypt.compareSync(password, dataDB[0].password)
               
               if(isValidPassword) {
+                const token = jwt.sign({
+                  id: dataDB[0].id,
+                  username: dataDB[0].username
+                }, "asd"
+              )
                 res.json("User Logged!")
               } else {
                 res.json("Incorrect Password");
