@@ -30,12 +30,15 @@ const login = async (req:any, res:any) => {
 
               res.json("Username not exist!")
             } else {
-              console.log(dataDB[0].password);
-              console.log(password);
 
-              const isValidPassword = await bcrypt.compare(password, dataDB[0].password)
-              console.log(isValidPassword)
-              res.json("User Logged!")
+              // Compara la contraseña
+              const isValidPassword = bcrypt.compareSync(password, dataDB[0].password)
+              
+              if(isValidPassword) {
+                res.json("User Logged!")
+              } else {
+                res.json("Incorrect Password");
+              }
             }
 
           })

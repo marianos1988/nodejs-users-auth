@@ -1,4 +1,5 @@
 import express from "express";
+import path from "path"
 // import { UserRepository } from "./repository";
 import cors from "cors";
 import helmet from "helmet";
@@ -12,14 +13,16 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(helmet());
-app.use(morgan("dev")); 
+app.use(morgan("dev"));
+app.set("view engine", "ejs") // SEtear plantillas que se van a usar EJS
+app.set('views', path.join(__dirname, 'views'))
 
 
 const PORT =  process.env.PORT || 3000;
 
 app.get("/", (req, res)=>{
   
-  res.send("Hola mundo");
+  res.render("example",{username: "Mariano"}); // el nombre name va a la variable de la plantilla name
 });
 
 app.use("/Login", routerLogin);
