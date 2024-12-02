@@ -2,6 +2,8 @@ import pool from "../bdConfig";
 import bcrypt from "bcrypt";
 import utils from "./utils";
 import jwt from "jsonwebtoken";
+import { SECRET_JWT_KEY } from "../parameters/parameters";
+
 
 
 const login = async (req:any, res:any) => {
@@ -36,12 +38,28 @@ const login = async (req:any, res:any) => {
               const isValidPassword = bcrypt.compareSync(password, dataDB[0].password)
               
               if(isValidPassword) {
+
+                //Cuando logeas se genera el JSON WEB TOKEN
                 const token = jwt.sign({
                   id: dataDB[0].id,
                   username: dataDB[0].username
-                }, "asd"
+                }, 
+                SECRET_JWT_KEY,
+                {
+                  expiresIn: "1h"
+                }
               )
-                res.json("User Logged!")
+                res
+                .cookie("access_token",token,{
+                  httpOnly: true, // La cookie solo se puede acceder en el servidor
+                  secure: process.env.Node = "production", // la cookie solo se puede acceder https
+                  sameSite: "strict", // la cookie solo se puede acceder en el mismo dominio
+                  maxAge: 1000 * 60 * 60 // la cookie tiene un tiempo de validez de 1 hora
+                })
+                .json({
+                  message: "User Logged!",
+                  token: token
+                })
               } else {
                 res.json("Incorrect Password");
               }

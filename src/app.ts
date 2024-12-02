@@ -3,6 +3,7 @@ import path from "path";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
+import cookieParser from "cookie-parser";
 
 //Routes
 import routerRegister from "./routers/routerRegister"
@@ -15,6 +16,8 @@ app.use(helmet());
 app.use(morgan("dev"));
 app.set("view engine", "ejs") // SEtear plantillas que se van a usar EJS
 app.set('views', path.join(__dirname, 'views')) // DEfinir la ruta de las plantillas ejs
+app.use(cookieParser()); //SEa ctiva el uso de las cookies
+
 
 
 const PORT =  process.env.PORT || 3000;
