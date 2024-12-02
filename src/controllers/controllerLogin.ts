@@ -49,6 +49,7 @@ const login = async (req:any, res:any) => {
                   expiresIn: "1h"
                 }
               )
+              console.log(token)
                 res
                 .cookie("access_token",token,{
                   httpOnly: true, // La cookie solo se puede acceder en el servidor
